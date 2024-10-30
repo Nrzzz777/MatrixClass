@@ -16,8 +16,7 @@
 3. 程序会自动计算并显示两个矩阵的加法和乘法结果（如果适用），以及各自的转置矩阵
 
 >代码如下：
->(python)
-```
+```python
 # 矩阵类
 class MatrixCalculate:
     def __init__(self, matrix_1):
