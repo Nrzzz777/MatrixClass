@@ -1,54 +1,34 @@
+import numpy as np
 # 矩阵类
 class MatrixCalculate:
-    def __init__(self, matrix_1):
-        self.matrix = matrix_1
-        self.rows = len(matrix_1)
-        self.cols = len(matrix_1[0]) if self.rows > 0 else 0
+    def __init__(self, matrix):
+        self.matrix = np.array(matrix)
+        self.rows = len(matrix)
+        self.cols = len(matrix[0]) if self.rows > 0 else 0
 
     #加法
     def add(self, matrix_2):
         if self.rows != matrix_2.rows or self.cols != matrix_2.cols:
             raise ValueError("行列数不相等")
-        result = []
-        for i in range(self.rows):
-            row = []
-            for j in range(self.cols):
-                row.append(self.matrix[i][j] + matrix_2.matrix[i][j])
-            result.append(row)
-        return MatrixCalculate(result)
+        return MatrixCalculate(self.matrix + matrix_2.matrix)
 
     #乘法
     def multiply(self, matrix_2):
         if self.cols != matrix_2.rows:
             raise ValueError("第一个矩阵的列数和第二个矩阵的行数不相等")
-        result = []
-        for i in range(self.rows):
-            row = []
-            for j in range(matrix_2.cols):
-                sum_product = 0
-                for k in range(self.cols):
-                    sum_product += self.matrix[i][k] * matrix_2.matrix[k][j]
-                row.append(sum_product)
-            result.append(row)
-        return MatrixCalculate(result)
+        return MatrixCalculate(np.dot(self.matrix, matrix_2.matrix))
     
     #转置
     def transpose(self):
-        result = []
-        for i in range(self.cols):
-            row = []
-            for j in range(self.rows):
-                row.append(self.matrix[j][i])
-            result.append(row)
-        return MatrixCalculate(result)
+        return MatrixCalculate(self.matrix.T)
 
 
 #输入矩阵
-def input_matrix(prompt):
-    print(prompt)
+def input_matrix(x):
+    print(x)
     rows = int(input("输入行数: "))
     matrix = []
-    for i in range(rows):
+    for _ in range(rows):
         row = list(map(int, input().split()))
         matrix.append(row)
     return MatrixCalculate(matrix)
